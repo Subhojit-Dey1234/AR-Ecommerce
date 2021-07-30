@@ -20,7 +20,8 @@ public class AnimationManager : MonoBehaviour
     {
         if(Physics.Raycast(Camera.main.transform.position,Camera.main.transform.forward,out RaycastHit hit)){
             Debug.Log("Hit");
-            if(hit.transform.CompareTag("CubeObject")){
+            if(hit.transform.CompareTag("CubeObject"))
+            {
                 Debug.Log(hit.transform.tag);
                 parent.transform.localScale = Vector3.Lerp(parent.transform.localScale,desiredScale,SPEED*Time.deltaTime);
 

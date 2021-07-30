@@ -5,16 +5,16 @@ using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 
-public class AR : MonoBehaviour
+public class ARPlacementManager : MonoBehaviour
 {
     public GameObject arObjectToSpawn;
     public GameObject placementIndicator;
     private GameObject spawnedObject;
-    private Pose PlacementPose;
+    private Pose placementPose;
     private ARRaycastManager aRRaycastManager;
     private bool placementPoseIsValid = false;
-    public GameObject Api,Parent,GameObjectCamera;
-    void Start()
+    public GameObject Api;
+    void Awake()
     {
         aRRaycastManager = FindObjectOfType<ARRaycastManager>();
     }
@@ -22,13 +22,12 @@ public class AR : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(spawnedObject == null && placementPoseIsValid && Input.touchCount>0 && Input.GetTouch(0).phase == TouchPhase.Began){
+        if(spawnedObject == null && placementPoseIsValid && Input.touchCount>0 && Input.GetTouch(0).phase == TouchPhase.Began)
+        {
 
             ARPlaceObject();
-            Api.SetActive(true);
+            //Api.SetActive(true);
             
-            // Parent.SetActive(true);
-            GameObjectCamera.SetActive(true);
         }
 
         UpdatePlacementPose();
@@ -40,7 +39,7 @@ public class AR : MonoBehaviour
         if(spawnedObject == null && placementPoseIsValid)
         {
             placementIndicator.SetActive(true);
-            placementIndicator.transform.SetPositionAndRotation(PlacementPose.position, PlacementPose.rotation);
+            placementIndicator.transform.SetPositionAndRotation(placementPose.position, placementPose.rotation);
         }
         else
         {
@@ -53,16 +52,16 @@ public class AR : MonoBehaviour
         
         var screenCenter = Camera.main.ViewportToScreenPoint(new Vector3(0.5f, 0.5f));
         var hits = new List<ARRaycastHit>();
-        aRRaycastManager.Raycast(screenCenter, hits, TrackableType.Planes);
+        aRRaycastManager.Raycast(screenCenter, hits, TrackableType.PlaneWithinPolygon);
 
-        placementPoseIsValid = hits.Count > 0;
+        placementPoseIsValid = (hits.Count > 0);
         if(placementPoseIsValid)
         {
-            PlacementPose = hits[0].pose;
+            placementPose = hits[0].pose;
         }
     }
 
     void ARPlaceObject(){
-        spawnedObject = Instantiate(arObjectToSpawn, PlacementPose.position, PlacementPose.rotation);
+        spawnedObject = Instantiate(arObjectToSpawn, placementPose.position, placementPose.rotation);
     }
 }
