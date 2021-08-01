@@ -13,7 +13,6 @@ public class ARPlacementManager : MonoBehaviour
     private Pose placementPose;
     private ARRaycastManager aRRaycastManager;
     private bool placementPoseIsValid = false;
-    public GameObject Api;
     void Awake()
     {
         aRRaycastManager = FindObjectOfType<ARRaycastManager>();

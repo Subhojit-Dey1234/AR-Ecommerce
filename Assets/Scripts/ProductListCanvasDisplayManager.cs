@@ -31,13 +31,7 @@ public class ProductListCanvasDisplayManager : MonoBehaviour
 
             }
         }
-        /*if(isSelected == true)
-        {
-            Quaternion newRotation = Quaternion.LookRotation(new Vector3(Camera.main.transform.position.x - productListCanvas.transform.position.x,
-                                0f,
-                                Camera.main.transform.position.z - productListCanvas.transform.position.z));
-            productListCanvas.transform.rotation = newRotation;
-        }*/
+       
         
     }
 
