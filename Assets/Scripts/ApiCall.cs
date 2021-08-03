@@ -48,7 +48,7 @@ public class ApiCall : MonoBehaviour
 
     IEnumerator GetGameIcon(){
         Debug.Log("Icon");
-        for(int i = 0; i< 3 ; i++ ){
+        for(int i = 0; i< totalData.Length ; i++ ){
             Debug.Log(totalData[i].image);
             UnityWebRequest w =  UnityWebRequestTexture.GetTexture(totalData[i].image);
             yield return w.SendWebRequest();

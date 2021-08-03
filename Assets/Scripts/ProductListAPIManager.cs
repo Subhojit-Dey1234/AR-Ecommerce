@@ -18,6 +18,7 @@ public class ProductListAPIManager : MonoBehaviour
         public string title;
         public string price;
         public string image;
+        public string description;
         public Sprite icon;
     }
 
@@ -29,7 +30,7 @@ public class ProductListAPIManager : MonoBehaviour
     }
     public void ArrowClicked()
     {
-        StartCoroutine(GetRequest("https://fakestoreapi.com/products"));
+        StartCoroutine(GetGameData());
         Debug.Log(productindex);
     }
     IEnumerator GetGameData()
@@ -40,7 +41,8 @@ public class ProductListAPIManager : MonoBehaviour
             Debug.Log(totalData[i].title); 
             productList[i].transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = totalData[i+productindex].title;
             productList[i].transform.GetChild(1).GetComponent<Image>().sprite = totalData[i+productindex].icon;
-            Debug.Log(totalData[i].icon);
+            productList[i].transform.GetChild(2).GetChild(0).GetChild(1).GetComponent<TMPro.TextMeshPro>().text = totalData[i+productindex].description;
+            Debug.Log(productList[i].transform.GetChild(2).GetChild(0));
             yield return totalData[i];
         }
     }
